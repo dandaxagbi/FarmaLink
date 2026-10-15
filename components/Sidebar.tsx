@@ -11,7 +11,8 @@ import {
   ChevronRight,
   ShieldCheck,
   Phone,
-  MapPin
+  MapPin,
+  X
 } from 'lucide-react';
 import { useRecetaStore } from '../lib/store';
 
@@ -81,23 +82,24 @@ export function Sidebar({
 
   return (
     <>
-      {/* Overlay para móviles */}
+      {/* Overlay para móviles con blur */}
       {isOpenMobile && (
         <div
           onClick={onCloseMobile}
-          className="fixed inset-0 bg-slate-900/40 backdrop-blur-xs z-40 lg:hidden"
+          className="fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-40 lg:hidden transition-opacity"
+          aria-hidden="true"
         />
       )}
 
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col transition-transform duration-200 ease-in-out lg:translate-x-0 ${
-          isOpenMobile ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed top-0 bottom-0 left-0 z-50 w-80 max-w-[85vw] bg-white border-r border-slate-200 flex flex-col transition-transform duration-250 ease-out lg:translate-x-0 ${
+          isOpenMobile ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
         }`}
       >
         {/* Encabezado del Centro Médico */}
-        <div className="p-5 border-b border-slate-100 bg-gradient-to-b from-slate-50/80 to-white">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-white border border-slate-200/80 p-1 flex items-center justify-center shadow-xs overflow-hidden flex-shrink-0">
+        <div className="p-4 sm:p-5 border-b border-slate-100 bg-gradient-to-b from-slate-50/80 to-white flex items-center justify-between gap-2">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-11 h-11 rounded-xl bg-white border border-slate-200/80 p-1 flex items-center justify-center shadow-xs overflow-hidden flex-shrink-0">
               {centroMedico.logoUrl ? (
                 <img
                   src={centroMedico.logoUrl}
@@ -122,10 +124,21 @@ export function Sidebar({
               </div>
             </div>
           </div>
+
+          {/* Botón cerrar para móviles (44x44px target) */}
+          <button
+            type="button"
+            onClick={onCloseMobile}
+            className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 active:bg-slate-200 transition-colors flex-shrink-0 touch-manipulation"
+            aria-label="Cerrar Menú"
+            title="Cerrar Menú"
+          >
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         {/* Navegación Principal */}
-        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-1.5">
           <div className="px-3 pb-2 text-[10px] font-bold tracking-wider text-slate-600 uppercase">
             Módulos del Sistema
           </div>
@@ -141,10 +154,10 @@ export function Sidebar({
                   setActiveTab(item.id);
                   if (onCloseMobile) onCloseMobile();
                 }}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all group ${
+                className={`w-full flex items-center gap-3 px-3 py-3 min-h-[48px] rounded-xl text-left transition-all group touch-manipulation ${
                   isActive
                     ? 'bg-blue-700 text-white shadow-xs font-semibold'
-                    : 'text-slate-700 hover:bg-slate-100/80 hover:text-slate-900'
+                    : 'text-slate-700 hover:bg-slate-100/80 hover:text-slate-900 active:bg-slate-200'
                 }`}
               >
                 <div

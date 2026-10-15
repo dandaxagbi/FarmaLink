@@ -83,38 +83,243 @@ export function CIE11Selector({ value, onChange }: CIE11SelectorProps) {
           </span>
         </label>
 
-        <div className="field-input flex items-center justify-between text-slate-800 pr-9 bg-white select-none">
+        <div className="field-input flex items-center justify-between text-slate-800 pr-2 sm:pr-9 bg-white select-none min-h-[44px] touch-manipulation">
           {value ? (
-            <div className="flex items-center gap-2 truncate">
-              <span className="font-semibold text-slate-900 truncate">
+            <div className="flex items-center gap-2 truncate pr-2">
+              <span className="font-semibold text-slate-900 truncate text-sm sm:text-xs">
                 {value}
               </span>
             </div>
           ) : (
-            <span className="text-slate-400 text-xs">
+            <span className="text-slate-400 text-sm sm:text-xs">
               Seleccione el diagnóstico (CIE-11)
             </span>
           )}
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 flex-shrink-0">
             {value && (
               <button
                 type="button"
                 onClick={handleClear}
-                className="p-1 text-slate-400 hover:text-slate-600 rounded-full hover:bg-slate-100 transition-colors mr-1"
+                className="w-9 h-9 flex items-center justify-center text-slate-400 hover:text-slate-700 active:text-rose-600 rounded-full hover:bg-slate-100 active:bg-rose-50 transition-colors"
                 title="Limpiar diagnóstico"
+                aria-label="Limpiar diagnóstico"
               >
-                <X className="w-3.5 h-3.5" />
+                <X className="w-4 h-4" />
               </button>
             )}
-            <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+            <div className="w-8 h-8 flex items-center justify-center text-slate-400">
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isOpen ? 'rotate-180 text-blue-700' : ''}`} />
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Popover Desplegable del Buscador CIE-11 */}
+      {/* MODAL MÓVIL PANTALLA COMPLETA (md:hidden) */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1.5 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in text-xs max-h-[480px] flex flex-col">
+        <div className="fixed inset-0 z-50 bg-white flex flex-col md:hidden animate-fade-in">
+          {/* Header Móvil */}
+          <div className="p-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                11
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-slate-900 leading-tight truncate">
+                  Buscador Diagnóstico CIE-11
+                </h3>
+                <p className="text-[11px] text-slate-500">Catálogo oficial OMS / OPS</p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="w-11 h-11 flex items-center justify-center rounded-xl bg-slate-200/80 active:bg-slate-300 text-slate-700 touch-manipulation"
+              aria-label="Cerrar buscador"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Buscador y Filtros Móviles */}
+          <div className="p-3 bg-slate-50 border-b border-slate-200 space-y-2.5">
+            <div className="relative">
+              <Search className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                ref={inputSearchRef}
+                type="text"
+                placeholder="Buscar código (ej. CA01) o patología (asma, diabetes)..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-10 py-3 bg-white text-base text-slate-800 border border-slate-300 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none"
+              />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm('')}
+                  className="w-10 h-10 flex items-center justify-center absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Filtros Swipeables */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs no-scrollbar touch-pan-x">
+              <button
+                type="button"
+                onClick={() => { setCapituloSeleccionado(undefined); setSoloFrecuentes(false); }}
+                className={`px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-colors min-h-[36px] flex items-center ${
+                  capituloSeleccionado === undefined && !soloFrecuentes
+                    ? 'bg-blue-700 text-white'
+                    : 'bg-white border border-slate-200 text-slate-700'
+                }`}
+              >
+                Todos ({CIE11_DATABASE.length})
+              </button>
+
+              <button
+                type="button"
+                onClick={() => { setSoloFrecuentes(!soloFrecuentes); setCapituloSeleccionado(undefined); }}
+                className={`px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-colors min-h-[36px] flex items-center gap-1.5 ${
+                  soloFrecuentes
+                    ? 'bg-amber-600 text-white'
+                    : 'bg-amber-50 border border-amber-200 text-amber-800'
+                }`}
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                Frecuentes
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setCapituloSeleccionado(12)}
+                className={`px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-colors min-h-[36px] flex items-center ${
+                  capituloSeleccionado === 12
+                    ? 'bg-blue-700 text-white'
+                    : 'bg-white border border-slate-200 text-slate-700'
+                }`}
+              >
+                Respiratorio (12)
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setCapituloSeleccionado(11)}
+                className={`px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-colors min-h-[36px] flex items-center ${
+                  capituloSeleccionado === 11
+                    ? 'bg-blue-700 text-white'
+                    : 'bg-white border border-slate-200 text-slate-700'
+                }`}
+              >
+                Circulatorio (11)
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setCapituloSeleccionado(5)}
+                className={`px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-colors min-h-[36px] flex items-center ${
+                  capituloSeleccionado === 5
+                    ? 'bg-blue-700 text-white'
+                    : 'bg-white border border-slate-200 text-slate-700'
+                }`}
+              >
+                Metabólico (05)
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setCapituloSeleccionado(13)}
+                className={`px-3 py-1.5 rounded-lg font-semibold whitespace-nowrap transition-colors min-h-[36px] flex items-center ${
+                  capituloSeleccionado === 13
+                    ? 'bg-blue-700 text-white'
+                    : 'bg-white border border-slate-200 text-slate-700'
+                }`}
+              >
+                Digestivo (13)
+              </button>
+            </div>
+          </div>
+
+          {/* Lista Móvil */}
+          <div className="overflow-y-auto flex-1 divide-y divide-slate-100 p-2">
+            {resultados.length === 0 ? (
+              <div className="p-8 text-center text-slate-500">
+                <BookOpen className="w-10 h-10 text-slate-300 mx-auto mb-3" />
+                <p className="font-bold text-slate-800 text-sm">No se encontraron diagnósticos</p>
+                <p className="text-xs text-slate-400 mt-1">Pruebe con otra patología o código médico.</p>
+                {searchTerm && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onChange(searchTerm);
+                      setIsOpen(false);
+                    }}
+                    className="mt-4 px-4 py-2.5 text-xs text-blue-700 bg-blue-50 border border-blue-200 rounded-xl font-bold w-full"
+                  >
+                    Usar texto libre: &ldquo;{searchTerm}&rdquo;
+                  </button>
+                )}
+              </div>
+            ) : (
+              resultados.map((item) => {
+                const isSelected = value.includes(item.codigo);
+                return (
+                  <button
+                    key={item.codigo}
+                    type="button"
+                    onClick={() => handleSelect(item)}
+                    className={`w-full text-left p-3.5 rounded-xl cursor-pointer transition-colors flex items-start justify-between gap-3 min-h-[52px] touch-manipulation mb-1 ${
+                      isSelected
+                        ? 'bg-blue-50 text-blue-900 font-bold border border-blue-200'
+                        : 'active:bg-slate-100 text-slate-800 bg-white'
+                    }`}
+                  >
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1 flex-wrap">
+                        <span className="font-mono text-xs font-bold px-2 py-0.5 rounded bg-blue-100 text-blue-800 border border-blue-200">
+                          {item.codigo}
+                        </span>
+                        <span className="text-xs font-bold text-slate-900">
+                          {item.titulo}
+                        </span>
+                        {item.esFrecuente && (
+                          <span className="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded font-semibold border border-amber-200">
+                            Frecuente
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-[11px] text-slate-500">
+                        {item.capituloNombre} (Cap. {item.capituloNumero})
+                      </p>
+                    </div>
+                    {isSelected && (
+                      <Check className="w-5 h-5 text-blue-700 flex-shrink-0 mt-0.5" />
+                    )}
+                  </button>
+                );
+              })
+            )}
+          </div>
+
+          {/* Footer Móvil */}
+          <div className="p-3 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs text-slate-500 safe-area-bottom">
+            <span>{resultados.length} diagnósticos</span>
+            <button
+              type="button"
+              onClick={() => setIsOpen(false)}
+              className="px-4 py-2 bg-blue-700 text-white rounded-lg font-bold text-xs"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* POPOVER DESPLEGABLE EN DESKTOP (hidden md:flex) */}
+      {isOpen && (
+        <div className="hidden md:flex md:flex-col absolute top-full left-0 right-0 mt-1.5 bg-white rounded-xl shadow-xl border border-slate-200 z-50 overflow-hidden animate-fade-in text-xs max-h-[480px]">
           {/* Barra de Búsqueda */}
           <div className="p-3 bg-slate-50 border-b border-slate-200 space-y-2">
             <div className="relative">

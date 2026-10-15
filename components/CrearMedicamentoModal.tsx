@@ -55,19 +55,20 @@ export function CrearMedicamentoModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-xl shadow-2xl border border-slate-200 max-w-lg w-full overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in overflow-y-auto">
+      <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl border border-slate-200 max-w-lg w-full max-h-[92vh] flex flex-col overflow-hidden my-0 sm:my-8 animate-scale-in">
         {/* Header */}
-        <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+        <div className="px-5 py-3.5 sm:py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <PlusCircle className="w-5 h-5 text-blue-700" />
-            <h2 className="text-sm font-bold text-slate-800">
-              Crear Nuevo Medicamento en Catálogo
+            <PlusCircle className="w-5 h-5 text-blue-700 flex-shrink-0" />
+            <h2 className="text-sm font-bold text-slate-800 truncate">
+              Crear Nuevo Medicamento
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded-md"
+            className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 active:bg-slate-200 transition-colors"
+            aria-label="Cerrar"
           >
             <X className="w-5 h-5" />
           </button>
@@ -187,20 +188,20 @@ export function CrearMedicamentoModal({
               </div>
             </div>
 
-            <div className="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+            <div className="pt-3 flex flex-col-reverse sm:flex-row items-center justify-end gap-2 border-t border-slate-100 sticky bottom-0 bg-white">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-md transition-colors"
+                className="w-full sm:w-auto px-4 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors min-h-[44px]"
               >
                 Cancelar
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 text-xs font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-md shadow-sm transition-colors flex items-center gap-1.5"
+                className="w-full sm:w-auto px-5 py-2.5 text-xs font-bold text-white bg-blue-700 hover:bg-blue-800 rounded-xl shadow-xs transition-colors flex items-center justify-center gap-1.5 min-h-[46px] touch-manipulation"
               >
-                <PlusCircle className="w-3.5 h-3.5" />
-                Guardar e Insertar en Receta
+                <PlusCircle className="w-4 h-4" />
+                <span>Guardar e Insertar en Receta</span>
               </button>
             </div>
           </form>

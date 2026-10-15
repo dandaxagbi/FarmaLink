@@ -52,7 +52,7 @@ h1, h2, h3, h4, .font-heading {
   font-family: var(--font-mono);
 }
 
-/* Campos de formulario idénticos a la imagen */
+/* Campos de formulario idénticos a la imagen con ergonomía móvil */
 .field-container {
   position: relative;
   display: flex;
@@ -75,15 +75,24 @@ h1, h2, h3, h4, .font-heading {
 
 .field-input {
   width: 100%;
-  height: 42px;
-  padding: 8px 36px 8px 12px;
-  font-size: 13.5px;
+  min-height: 44px;
+  padding: 10px 42px 10px 12px;
+  font-size: 16px; /* Evita auto-zoom molesto en iOS Safari */
   color: var(--color-text-main);
   background-color: #ffffff;
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: 8px;
   outline: none;
   transition: all 0.15s ease-in-out;
+}
+
+@media (min-width: 640px) {
+  .field-input {
+    min-height: 42px;
+    padding: 8px 36px 8px 12px;
+    font-size: 13.5px;
+    border-radius: 6px;
+  }
 }
 
 .field-input:focus {
@@ -93,14 +102,23 @@ h1, h2, h3, h4, .font-heading {
 
 .field-input::placeholder {
   color: var(--color-text-subtle);
-  font-size: 13px;
+  font-size: 14px;
 }
 
+@media (min-width: 640px) {
+  .field-input::placeholder {
+    font-size: 13px;
+  }
+}
+
+/* Botón de limpiar campo con área táctil accesible de 44x44px */
 .field-clear-btn {
   position: absolute;
-  right: 10px;
+  right: 2px;
   top: 50%;
   transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
   background: none;
   border: none;
   color: #94a3b8;
@@ -108,28 +126,42 @@ h1, h2, h3, h4, .font-heading {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2px;
   border-radius: 50%;
   transition: color 0.15s ease, background-color 0.15s ease;
+  z-index: 3;
 }
 
-.field-clear-btn:hover {
+.field-clear-btn:hover, .field-clear-btn:active {
   color: #475569;
   background-color: #f1f5f9;
 }
 
 /* Segmented control para duración */
 .duration-pill-group {
-  display: inline-flex;
+  display: flex;
+  width: 100%;
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: 8px;
   overflow: hidden;
   background-color: #ffffff;
 }
 
+@media (min-width: 640px) {
+  .duration-pill-group {
+    display: inline-flex;
+    width: auto;
+    border-radius: 6px;
+  }
+}
+
 .duration-pill-btn {
-  padding: 8px 14px;
-  font-size: 12.5px;
+  flex: 1;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  font-size: 13px;
   font-weight: 500;
   border: none;
   background: transparent;
@@ -137,6 +169,16 @@ h1, h2, h3, h4, .font-heading {
   cursor: pointer;
   transition: all 0.15s ease;
   border-right: 1px solid var(--color-border);
+  touch-action: manipulation;
+}
+
+@media (min-width: 640px) {
+  .duration-pill-btn {
+    flex: initial;
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 12.5px;
+  }
 }
 
 .duration-pill-btn:last-child {
