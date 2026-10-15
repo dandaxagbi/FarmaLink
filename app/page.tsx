@@ -56,7 +56,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 flex">
+    <div className="min-h-screen bg-slate-50 flex w-full max-w-full overflow-x-hidden">
       {/* Menú Lateral en el lado izquierdo */}
       <Sidebar
         activeTab={activeTab}
@@ -66,14 +66,14 @@ export default function HomePage() {
       />
 
       {/* Contenedor Principal (con margen izquierdo para el sidebar en desktop) */}
-      <div className="flex-1 lg:pl-72 flex flex-col min-h-screen">
+      <div className="flex-1 w-full min-w-0 max-w-full lg:pl-72 flex flex-col min-h-screen overflow-x-hidden">
         <Navbar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           onOpenMobileMenu={() => setIsMobileMenuOpen(true)}
         />
 
-        <main className="flex-1 pb-28 lg:pb-16">
+        <main className="flex-1 w-full min-w-0 max-w-full pb-28 lg:pb-16 overflow-x-hidden">
           {activeTab === 'receta' && <RecetaForm />}
           {activeTab === 'pacientes' && (
             <PacientesView onEmitirRecetaPaciente={() => setActiveTab('receta')} />
@@ -92,10 +92,11 @@ export default function HomePage() {
         {/* Barra de Navegación Inferior Móvil (Zona Ergonómica del Pulgar - Steven Hoober / NN Group) */}
         <nav
           aria-label="Navegación Móvil Rápida"
-          className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 lg:hidden flex items-stretch justify-around px-1 py-1 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] safe-area-bottom"
+          className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 lg:hidden flex items-stretch justify-around px-1 py-1 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] safe-area-bottom w-full max-w-full"
         >
           {/* Receta */}
           <button
+            id="mobile-nav-receta"
             type="button"
             onClick={() => setActiveTab('receta')}
             className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 min-h-[48px] rounded-lg transition-colors relative ${
@@ -114,6 +115,7 @@ export default function HomePage() {
 
           {/* Pacientes */}
           <button
+            id="mobile-nav-pacientes"
             type="button"
             onClick={() => setActiveTab('pacientes')}
             className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 min-h-[48px] rounded-lg transition-colors relative ${
@@ -137,6 +139,7 @@ export default function HomePage() {
 
           {/* Farmacia */}
           <button
+            id="mobile-nav-farmacia"
             type="button"
             onClick={() => setActiveTab('farmacia')}
             className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 min-h-[48px] rounded-lg transition-colors relative ${
@@ -160,6 +163,7 @@ export default function HomePage() {
 
           {/* WhatsApp / Paciente */}
           <button
+            id="mobile-nav-whatsapp"
             type="button"
             onClick={() => setActiveTab('paciente_portal')}
             className={`flex-1 flex flex-col items-center justify-center py-1.5 px-1 min-h-[48px] rounded-lg transition-colors relative ${
@@ -178,6 +182,7 @@ export default function HomePage() {
 
           {/* Menú Completo */}
           <button
+            id="mobile-nav-menu"
             type="button"
             onClick={() => setIsMobileMenuOpen(true)}
             className="flex-1 flex flex-col items-center justify-center py-1.5 px-1 min-h-[48px] rounded-lg text-slate-500 hover:text-slate-900 active:bg-slate-100 transition-colors"

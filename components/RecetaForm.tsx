@@ -239,7 +239,7 @@ export function RecetaForm() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6">
+    <div className="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-6 overflow-x-hidden">
       {/* Banner Notificación Toast */}
       {notifSuccess && (
         <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 text-emerald-800 text-xs font-semibold animate-fade-in shadow-xs">
@@ -292,8 +292,8 @@ export function RecetaForm() {
           </div>
 
           {/* Selector y Botón Nuevo Paciente */}
-          <div className="flex items-center gap-2 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
-            <div className="flex-1 sm:flex-initial flex items-center gap-1.5 bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 min-h-[44px]">
+          <div className="flex items-center gap-2 w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100 min-w-0">
+            <div className="flex-1 sm:flex-initial min-w-0 max-w-full flex items-center gap-1.5 bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 min-h-[44px]">
               <Users className="w-4 h-4 text-slate-500 flex-shrink-0" />
               <select
                 value={pacienteActivo.id}
@@ -301,7 +301,7 @@ export function RecetaForm() {
                   const p = pacientes.find(item => item.id === e.target.value);
                   if (p) seleccionarPaciente(p);
                 }}
-                className="bg-transparent text-xs font-semibold text-slate-800 focus:outline-none cursor-pointer w-full"
+                className="bg-transparent text-xs font-semibold text-slate-800 focus:outline-none cursor-pointer w-full max-w-full truncate"
                 aria-label="Seleccionar paciente"
               >
                 {pacientes.map(p => (
@@ -326,7 +326,7 @@ export function RecetaForm() {
       </div>
 
       {/* Contenedor Principal de la Receta Digital */}
-      <div className="bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
+      <div className="w-full max-w-full bg-white rounded-xl shadow-xs border border-slate-200 overflow-hidden">
         {/* Cabecera y Tabs */}
         <div className="px-4 sm:px-6 pt-4 sm:pt-5 pb-0 border-b border-slate-200">
           <div className="flex items-center justify-between gap-3 mb-3">
@@ -398,7 +398,7 @@ export function RecetaForm() {
                       <select
                         value={medicamentoId}
                         onChange={handleSeleccionarMedicamento}
-                        className="field-input text-slate-800 bg-white cursor-pointer"
+                        className="field-input text-slate-800 bg-white cursor-pointer w-full max-w-full truncate"
                       >
                         <option value="">Seleccione Medicamento</option>
                         {medicamentos.map((m) => (
@@ -806,7 +806,7 @@ export function RecetaForm() {
       </div>
 
       {/* BARRA INFERIOR FIJA PARA MÓVILES (Zona Ergonómica del Pulgar - Thumb Zone Action Bar) */}
-      <div className="lg:hidden fixed bottom-14 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex items-center justify-between gap-2 shadow-lg safe-area-bottom">
+      <div className="lg:hidden fixed bottom-14 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex items-center justify-between gap-2 shadow-lg safe-area-bottom w-full max-w-full">
         <button
           type="button"
           onClick={handleDescargarBorradorPDF}

@@ -73,8 +73,10 @@ export function CIE11Selector({ value, onChange }: CIE11SelectorProps) {
     <div ref={containerRef} className="relative w-full">
       {/* Contenedor del campo con estética de la imagen original */}
       <div
+        id="cie11-field-trigger"
+        data-testid="cie11-trigger"
         onClick={() => setIsOpen(!isOpen)}
-        className="field-container cursor-pointer"
+        className="field-container cursor-pointer scroll-mt-24"
       >
         <label className="field-label flex items-center gap-1.5">
           <span>Diagnóstico</span>

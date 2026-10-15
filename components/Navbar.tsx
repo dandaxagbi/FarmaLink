@@ -40,7 +40,7 @@ export function Navbar({ activeTab, setActiveTab, onOpenMobileMenu }: NavbarProp
   const { titulo, desc } = titulosPorTab[activeTab] || titulosPorTab.receta;
 
   return (
-    <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs w-full max-w-full">
       <div className="px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-3">
         {/* Izquierda: Botón Móvil + Información del Módulo Actual */}
         <div className="flex items-center gap-2 sm:gap-3 min-w-0">

@@ -106,7 +106,7 @@ export function PacientesView({ onEmitirRecetaPaciente }: PacientesViewProps) {
   ).length;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="w-full max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 overflow-x-hidden">
       {/* Toast */}
       {toastMessage && (
         <div className="fixed top-5 right-5 z-50 p-4 bg-emerald-600 text-white rounded-xl shadow-lg flex items-center gap-3 animate-fade-in text-sm font-semibold">

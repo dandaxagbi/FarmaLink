@@ -71,7 +71,7 @@ export function PacienteView() {
   const isPreparando = receta.estado === 'PREPARANDO';
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 space-y-6">
+    <div className="w-full max-w-5xl mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-6 overflow-x-hidden">
       {/* Selector de Receta si hay múltiples */}
       {recetas.length > 1 && (
         <div className="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs flex items-center justify-between text-xs">
@@ -93,7 +93,7 @@ export function PacienteView() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
         {/* COLUMNA IZQUIERDA: Mockup de Teléfono con WhatsApp */}
         <div className="md:col-span-6 flex justify-center">
-          <div className="w-[340px] bg-slate-900 rounded-[38px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-950/20">
+          <div className="w-full max-w-[340px] bg-slate-900 rounded-[38px] p-3 shadow-2xl border-4 border-slate-800 ring-1 ring-slate-950/20">
             {/* Notch superior */}
             <div className="w-28 h-4 bg-slate-800 rounded-full mx-auto mb-2 flex items-center justify-center">
               <div className="w-3 h-3 rounded-full bg-slate-950 mr-2" />
