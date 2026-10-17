@@ -55,23 +55,23 @@ export function CrearMedicamentoModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in overflow-y-auto">
-      <div className="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 max-w-lg w-full max-h-[92vh] flex flex-col overflow-hidden my-0 sm:my-8 animate-scale-in">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in overflow-y-auto modal-overscroll-contain overscroll-contain">
+      <div className="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 max-w-lg w-full max-h-[92vh] flex flex-col overflow-hidden my-0 sm:my-8 animate-scale-in overscroll-contain">
         <div className="bottom-sheet-handle sm:hidden" />
         {/* Header */}
         <div className="px-5 py-3.5 sm:py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <PlusCircle className="w-5 h-5 text-blue-700 flex-shrink-0" />
-            <h2 className="text-sm font-bold text-slate-800 truncate">
+            <PlusCircle className="w-5 h-5 text-blue-700 flex-shrink-0" aria-hidden="true" />
+            <h2 className="text-sm font-bold text-slate-800 truncate text-pretty">
               Crear Nuevo Medicamento
             </h2>
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 active:bg-slate-200 transition-colors"
-            aria-label="Cerrar"
+            className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 active:bg-slate-200 transition-colors focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+            aria-label="Cerrar ventana de medicamento"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 

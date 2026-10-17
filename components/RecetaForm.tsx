@@ -283,7 +283,7 @@ export function RecetaForm() {
                   {pacienteActivo.nombreCompleto}
                 </span>
                 <span className="text-xs text-slate-500 truncate">
-                  (CI: <strong className="text-slate-700">{pacienteActivo.rutOIdentificacion}</strong> • {pacienteActivo.edad} a)
+                  (CI: <strong className="text-slate-700 font-mono tabular-nums" translate="no">{pacienteActivo.rutOIdentificacion}</strong> • <span className="tabular-nums">{pacienteActivo.edad}</span> a)
                 </span>
               </div>
 
@@ -749,12 +749,12 @@ export function RecetaForm() {
                             <span className="text-slate-500 font-normal text-[11px]">
                               ({item.presentacion})
                             </span>
-                            <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-100">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-700 border border-blue-100 tabular-nums">
                               Cant: {item.cantidadTotal}
                             </span>
                           </div>
                           <p className="text-[11.5px] text-slate-600 mt-1 pl-6 sm:pl-7">
-                            <strong>Posología:</strong> {item.dosis} {item.unidadMedida} • {item.frecuencia} • {item.duracionNumero} {item.duracionUnidad} ({item.fechaInicio} al {item.fechaFin})
+                            <strong>Posología:</strong> <span className="font-mono tabular-nums">{item.dosis} {item.unidadMedida}</span> • {item.frecuencia} • <span className="tabular-nums">{item.duracionNumero} {item.duracionUnidad}</span> (<span className="font-mono tabular-nums">{item.fechaInicio}</span> al <span className="font-mono tabular-nums">{item.fechaFin}</span>)
                           </p>
                           {item.indicaciones && (
                             <p className="text-[11px] text-blue-700 mt-0.5 pl-6 sm:pl-7">
@@ -766,11 +766,11 @@ export function RecetaForm() {
                         <button
                           type="button"
                           onClick={() => handleEliminarItem(item.id)}
-                          className="w-11 h-11 flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 active:bg-red-100 rounded-xl transition-colors flex-shrink-0 touch-manipulation"
+                          className="w-11 h-11 flex items-center justify-center text-slate-400 hover:text-red-600 hover:bg-red-50 active:bg-red-100 rounded-xl transition-colors flex-shrink-0 touch-manipulation focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:outline-none"
                           title="Eliminar de la receta"
                           aria-label="Eliminar de la receta"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-4 h-4" aria-hidden="true" />
                         </button>
                       </div>
                     ))}
@@ -790,7 +790,7 @@ export function RecetaForm() {
                 value={noFarmacologicoTexto}
                 onChange={(e) => setNoFarmacologicoTexto(e.target.value)}
                 className="w-full p-3 text-sm sm:text-xs border border-slate-300 rounded-xl focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none leading-relaxed text-slate-800"
-                placeholder="Describa las indicaciones de reposo, alimentación, fisioterapia..."
+                placeholder="Describa las indicaciones de reposo, alimentación, fisioterapia…"
               />
             </div>
           )}

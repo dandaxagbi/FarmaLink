@@ -175,18 +175,19 @@ export function PacientesView({ onEmitirRecetaPaciente }: PacientesViewProps) {
       {/* Buscador */}
       <div className="mb-6">
         <div className="relative">
-          <Search className="w-4 h-4 text-slate-400 absolute left-4 top-3.5" />
+          <Search className="w-4 h-4 text-slate-400 absolute left-4 top-3.5" aria-hidden="true" />
           <input
             type="text"
             value={busqueda}
             onChange={e => setBusqueda(e.target.value)}
-            placeholder="Buscar por nombre, CI/RUT, teléfono, condición o alergia..."
-            className="w-full pl-11 pr-12 py-3 bg-white rounded-xl border border-slate-200 text-base sm:text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent shadow-xs min-h-[46px]"
+            placeholder="Buscar por nombre, CI/RUT, teléfono, condición o alergia…"
+            className="w-full pl-11 pr-12 py-3 bg-white rounded-xl border border-slate-200 text-base sm:text-sm text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:border-transparent outline-none shadow-xs min-h-[46px]"
           />
           {busqueda && (
             <button
               onClick={() => setBusqueda('')}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-xs text-slate-400 hover:text-slate-600"
+              aria-label="Limpiar búsqueda"
+              className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center text-xs text-slate-400 hover:text-slate-600 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none rounded-lg"
             >
               ✕
             </button>
@@ -260,7 +261,7 @@ export function PacientesView({ onEmitirRecetaPaciente }: PacientesViewProps) {
                           )}
                         </div>
                         <div className="text-xs text-slate-500 mt-0.5 truncate">
-                          CI: <span className="font-semibold text-slate-700">{p.rutOIdentificacion}</span> • {p.edad} años
+                          CI: <span className="font-semibold text-slate-700 font-mono tabular-nums" translate="no">{p.rutOIdentificacion}</span> • <span className="tabular-nums">{p.edad}</span> años
                         </div>
                       </div>
                     </div>

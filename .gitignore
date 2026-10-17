@@ -34,3 +34,5 @@ yarn-error.log*
 
 # screenshots
 screenshot_*.png
+mobile_*.png
+live_mobile_*.png

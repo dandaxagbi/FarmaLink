@@ -36,10 +36,17 @@ async function runMobileAudit() {
     console.log('💥 Page error:', err.message);
   });
 
+  page.on('dialog', async dialog => {
+    console.log('🔔 Diálogo nativo detectado:', dialog.message());
+    await dialog.accept();
+  });
+
   const targetUrl = 'http://localhost:3000';
   console.log(`🌐 Navegando a ${targetUrl}...`);
   await page.goto(targetUrl, { waitUntil: 'networkidle' });
   await page.addStyleTag({ content: 'nextjs-portal { display: none !important; }' });
+  // Esperar hidratación completa de React en el cliente
+  await page.waitForTimeout(2000);
 
   // 1. Captura de vista inicial de la receta en mobile
   console.log('📸 Tomando captura 1: Receta Móvil Inicial...');
@@ -81,7 +88,7 @@ async function runMobileAudit() {
     await page.waitForTimeout(400);
     await page.screenshot({ path: 'mobile_3_cie11_search.png', fullPage: false });
 
-    // Seleccionar el primer resultado
+    // Seleccionar el primer resultado o cerrar
     const primerResultado = page.locator('button:has-text("Diabetes")').first();
     if (await primerResultado.isVisible()) {
       await primerResultado.click();
@@ -89,18 +96,23 @@ async function runMobileAudit() {
     }
   }
 
+  // Asegurar cierre de CIE-11 si sigue abierto
+  const cerrarCie11 = page.locator('button[aria-label*="Cerrar buscador"], button:has-text("Cerrar")').first();
+  if (await cerrarCie11.isVisible()) {
+    await cerrarCie11.click();
+    await page.waitForTimeout(400);
+  }
+
   await page.waitForTimeout(500);
 
   // 3.1 Probar nuevo Control Segmentado de Tratamiento (Hick's Law)
   console.log('🧪 Probando Control Segmentado de Tratamiento...');
   const tabNoFarm = page.locator('#tab-no-farmacologico');
-  await tabNoFarm.click();
-  await page.waitForTimeout(400);
-  await page.screenshot({ path: 'mobile_3b_tab_no_farmacologico.png', fullPage: false });
-
-  const tabFarm = page.locator('#tab-farmacologico');
-  await tabFarm.click();
-  await page.waitForTimeout(400);
+  if (await tabNoFarm.isVisible()) {
+    await tabNoFarm.click();
+    await page.waitForTimeout(400);
+    await page.screenshot({ path: 'mobile_3b_tab_no_farmacologico.png', fullPage: false });
+  }
 
   // 3.2 Probar Quick-Chip de Duración (Fitts's Law)
   console.log('🧪 Probando Quick-Chip de Duración (7d)...');
@@ -112,51 +124,52 @@ async function runMobileAudit() {
 
   // 3.3 Probar Apertura de Modal de Envío (Bottom Sheet)
   console.log('🧪 Probando Modal de Envío (Bottom Sheet)...');
-  const btnEmitir = page.locator('button:has-text("Emitir y Despachar")').first();
+  const btnEmitir = page.locator('button:has-text("Emitir y Despachar")').last();
   if (await btnEmitir.isVisible()) {
     await btnEmitir.click();
-    await page.waitForTimeout(500);
+    await page.waitForTimeout(600);
     await page.screenshot({ path: 'mobile_3c_envio_modal.png', fullPage: false });
     // Cerrar modal
-    const closeBtn = page.locator('button[aria-label="Cerrar"]').first();
+    const closeBtn = page.locator('button[aria-label="Cerrar ventana de envío"], button:has-text("Volver y Editar")').first();
     if (await closeBtn.isVisible()) {
       await closeBtn.click();
-      await page.waitForTimeout(400);
+      await page.waitForTimeout(500);
     }
   }
 
   // 4. Probar tab de navegación inferior: Pacientes
   console.log('🧪 Probando navegación a pestaña Pacientes...');
-  const pacientesTab = page.locator('#mobile-nav-pacientes');
-  await pacientesTab.click();
+  await page.click('#mobile-nav-pacientes');
   await page.waitForTimeout(600);
   await page.screenshot({ path: 'mobile_4_pacientes.png', fullPage: false });
 
   // 5. Probar tab de navegación inferior: Farmacia
   console.log('🧪 Probando navegación a pestaña Farmacia...');
-  const farmaciaTab = page.locator('#mobile-nav-farmacia');
-  await farmaciaTab.click();
+  await page.click('#mobile-nav-farmacia');
   await page.waitForTimeout(600);
   await page.screenshot({ path: 'mobile_5_farmacia.png', fullPage: false });
 
   // 6. Probar tab de navegación inferior: WhatsApp
   console.log('🧪 Probando navegación a pestaña WhatsApp...');
-  const whatsappTab = page.locator('#mobile-nav-whatsapp');
-  await whatsappTab.click();
+  await page.click('#mobile-nav-whatsapp');
   await page.waitForTimeout(600);
   await page.screenshot({ path: 'mobile_6_whatsapp.png', fullPage: false });
 
   // 7. Probar botón Menú (Sidebar)
   console.log('🧪 Probando botón Menú...');
-  const menuTab = page.locator('#mobile-nav-menu');
-  await menuTab.click();
+  await page.click('#mobile-nav-menu');
   await page.waitForTimeout(600);
   await page.screenshot({ path: 'mobile_7_sidebar_menu.png', fullPage: false });
 
   // 8. Volver a Receta seleccionando el item del sidebar (cerrando el menú)
-  console.log('🧪 Volviendo a Receta desde el menú lateral...');
-  const sidebarReceta = page.locator('aside button:has-text("Receta Digital")').first();
-  await sidebarReceta.click();
+  console.log('🧪 Volviendo a Receta...');
+  const closeMenu = page.locator('button[aria-label="Cerrar Menú"]').first();
+  if (await closeMenu.isVisible()) {
+    await closeMenu.click({ force: true });
+    await page.waitForTimeout(400);
+  }
+  await page.click('#mobile-nav-receta');
+
   await page.waitForTimeout(600);
   await page.screenshot({ path: 'mobile_8_receta_full.png', fullPage: true });
 

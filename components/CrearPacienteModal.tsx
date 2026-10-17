@@ -104,17 +104,17 @@ export function CrearPacienteModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto animate-fade-in">
-      <div className="relative w-full max-w-2xl bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 max-h-[92vh] flex flex-col overflow-hidden my-0 sm:my-8 animate-scale-in">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto animate-fade-in modal-overscroll-contain overscroll-contain">
+      <div className="relative w-full max-w-2xl bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 max-h-[92vh] flex flex-col overflow-hidden my-0 sm:my-8 animate-scale-in overscroll-contain">
         <div className="bottom-sheet-handle sm:hidden" />
         {/* Header Modal */}
         <div className="px-5 py-3.5 sm:py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center flex-shrink-0" aria-hidden="true">
               <UserPlus className="w-5 h-5" />
             </div>
             <div className="min-w-0">
-              <h2 className="text-sm sm:text-base font-bold text-slate-900 truncate">
+              <h2 className="text-sm sm:text-base font-bold text-slate-900 truncate text-pretty">
                 {pacienteEditar ? 'Editar Ficha del Paciente' : 'Registrar Nuevo Paciente'}
               </h2>
               <p className="text-[11px] text-slate-500 truncate">
@@ -125,15 +125,15 @@ export function CrearPacienteModal({
 
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 active:bg-slate-200 transition-colors flex-shrink-0"
-            aria-label="Cerrar"
+            className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 active:bg-slate-200 transition-colors flex-shrink-0 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+            aria-label="Cerrar ventana de paciente"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
         {/* Formulario */}
-        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-4 sm:space-y-5 overflow-y-auto flex-1 overscroll-contain">
           {/* Datos Personales Principales */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
@@ -309,8 +309,8 @@ export function CrearPacienteModal({
                 rows={2}
                 value={antecedentesMedicos}
                 onChange={e => setAntecedentesMedicos(e.target.value)}
-                placeholder="Ej. Diabetes Mellitus Tipo 2, Pie Diabético Wagner II, Hipertensión arterial..."
-                className="w-full px-3.5 py-2 rounded-lg border border-amber-300 bg-white text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                placeholder="Ej. Diabetes Mellitus Tipo 2, Pie Diabético Wagner II, Hipertensión arterial…"
+                className="w-full px-3.5 py-2 rounded-lg border border-amber-300 bg-white text-xs text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500 outline-none"
               />
             </div>
           </div>

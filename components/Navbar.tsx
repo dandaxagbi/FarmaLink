@@ -47,11 +47,11 @@ export function Navbar({ activeTab, setActiveTab, onOpenMobileMenu }: NavbarProp
           <button
             type="button"
             onClick={onOpenMobileMenu}
-            className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 active:bg-slate-200 transition-colors touch-manipulation"
+            className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 active:bg-slate-200 transition-colors touch-manipulation focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
             aria-label="Abrir Menú de Navegación Lateral"
             title="Abrir Menú Lateral"
           >
-            <Menu className="w-5 h-5" />
+            <Menu className="w-5 h-5" aria-hidden="true" />
           </button>
 
           <div className="min-w-0">
@@ -78,19 +78,21 @@ export function Navbar({ activeTab, setActiveTab, onOpenMobileMenu }: NavbarProp
                 <img
                   src={centroMedico.logoUrl}
                   alt={centroMedico.nombre}
+                  width={36}
+                  height={36}
                   className="w-full h-full object-contain"
                 />
               ) : (
-                <Building2 className="w-4 h-4 text-blue-700" />
+                <Building2 className="w-4 h-4 text-blue-700" aria-hidden="true" />
               )}
             </div>
 
             <div className="border-l border-slate-200 pl-3 hidden md:block text-right">
-              <div className="text-xs font-bold text-slate-900 tracking-tight leading-tight">
+              <div className="text-xs font-bold text-slate-900 tracking-tight leading-tight" translate="no">
                 {centroMedico.nombre}
               </div>
               <p className="text-[11px] text-slate-600 font-medium">
-                {centroMedico.doctor.nombre} ({centroMedico.doctor.especialidad})
+                <span translate="no">{centroMedico.doctor.nombre}</span> ({centroMedico.doctor.especialidad})
               </p>
             </div>
           </div>

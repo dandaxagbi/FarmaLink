@@ -400,3 +400,57 @@ button, a, input, select, textarea {
   margin: 8px auto 4px auto;
 }
 
+/* =========================================================
+   VERCEL WEB INTERFACE GUIDELINES & ACCESSIBILITY TOKENS
+   ========================================================= */
+
+/* Tabular numbers para alinear códigos CIE-11, fechas, posologías e importes */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum";
+}
+
+/* Text balance y pretty para encabezados clínicos y evitar huérfanos */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+/* Contención de overscroll en modales, drawers y bottom sheets */
+.modal-overscroll-contain {
+  overscroll-behavior: contain;
+}
+
+/* Supresión de rubber-band en mouse/trackpad desktop */
+@media (pointer: fine) {
+  html {
+    overscroll-behavior-y: none;
+  }
+}
+
+/* Respeto estricto a prefers-reduced-motion (WCAG 2.2 / Vercel guidelines) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Estados de foco accesible visible con ring nítido y sin destellos en click */
+:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Bordes y acabados hairline estilo Linear / Stripe */
+.border-hairline {
+  border-color: rgba(226, 232, 240, 0.85);
+}
+
+

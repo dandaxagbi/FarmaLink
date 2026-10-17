@@ -92,7 +92,7 @@ export function Sidebar({
       )}
 
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-80 max-w-[85vw] bg-white border-r border-slate-200 flex flex-col transition-transform duration-250 ease-out lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-50 w-80 max-w-[85vw] bg-white border-r border-slate-200 flex flex-col transition-transform duration-250 ease-out lg:translate-x-0 modal-overscroll-contain overscroll-contain ${
           isOpenMobile ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
         }`}
       >
@@ -104,22 +104,24 @@ export function Sidebar({
                 <img
                   src={centroMedico.logoUrl}
                   alt={centroMedico.nombre}
+                  width={44}
+                  height={44}
                   className="w-full h-full object-contain"
                 />
               ) : (
-                <Building2 className="w-6 h-6 text-blue-600" />
+                <Building2 className="w-6 h-6 text-blue-600" aria-hidden="true" />
               )}
             </div>
 
             <div className="min-w-0 flex-1">
-              <h2 className="text-sm font-bold text-slate-900 truncate tracking-tight">
+              <h2 className="text-sm font-bold text-slate-900 truncate tracking-tight text-pretty" translate="no">
                 {centroMedico.nombre}
               </h2>
               <p className="text-[11px] font-medium text-slate-500 truncate">
                 {centroMedico.subtitulo || 'Centro de Especialidades'}
               </p>
               <div className="flex items-center gap-1 text-[10px] text-emerald-600 font-semibold mt-0.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true"></span>
                 <span>Sistema Clínico Activo</span>
               </div>
             </div>
@@ -129,11 +131,11 @@ export function Sidebar({
           <button
             type="button"
             onClick={onCloseMobile}
-            className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 active:bg-slate-200 transition-colors flex-shrink-0 touch-manipulation"
+            className="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-800 hover:bg-slate-100 active:bg-slate-200 transition-colors flex-shrink-0 touch-manipulation focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
             aria-label="Cerrar Menú"
             title="Cerrar Menú"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
@@ -216,13 +218,13 @@ export function Sidebar({
               </div>
 
               <div className="min-w-0 flex-1">
-                <div className="text-xs font-bold text-slate-900 truncate">
+                <div className="text-xs font-bold text-slate-900 truncate" translate="no">
                   {centroMedico.doctor.nombre}
                 </div>
                 <div className="text-[11px] text-blue-700 font-semibold truncate">
                   {centroMedico.doctor.especialidad}
                 </div>
-                <div className="text-[10px] text-slate-600 truncate">
+                <div className="text-[10px] text-slate-600 truncate font-mono tabular-nums" translate="no">
                   Mat. {centroMedico.doctor.registroMedico}
                 </div>
               </div>

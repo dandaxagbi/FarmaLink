@@ -123,13 +123,13 @@ export function FarmaciaPortal() {
           {/* Barra de Búsqueda por Código de Retiro */}
           <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
             <div className="relative flex-1 min-w-[280px]">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
               <input
                 type="text"
-                placeholder="Buscar por código de retiro (ej. RX-74921) o nombre del paciente..."
+                placeholder="Buscar por código de retiro (ej. RX-74921) o nombre del paciente…"
                 value={searchCode}
                 onChange={(e) => setSearchCode(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-xs border border-slate-300 rounded-lg focus:border-blue-600 focus:ring-2 focus:ring-blue-100 outline-none"
+                className="w-full pl-9 pr-4 py-2 text-xs border border-slate-300 rounded-lg focus-visible:border-blue-600 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none outline-none"
               />
             </div>
 

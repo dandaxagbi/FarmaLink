@@ -111,15 +111,15 @@ export function EnvioModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in overflow-y-auto">
-      <div className="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 max-w-2xl w-full max-h-[92vh] flex flex-col overflow-hidden my-0 sm:my-8 animate-scale-in">
+    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-xs animate-fade-in overflow-y-auto modal-overscroll-contain overscroll-contain">
+      <div className="bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl border border-slate-200 max-w-2xl w-full max-h-[92vh] flex flex-col overflow-hidden my-0 sm:my-8 animate-scale-in overscroll-contain">
         <div className="bottom-sheet-handle sm:hidden" />
         {/* Cabecera */}
         <div className="px-5 py-3.5 sm:py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2.5 min-w-0">
-            <Building2 className="w-5 h-5 text-blue-700 flex-shrink-0" />
+            <Building2 className="w-5 h-5 text-blue-700 flex-shrink-0" aria-hidden="true" />
             <div className="min-w-0">
-              <h2 className="text-sm font-bold text-slate-800 truncate">
+              <h2 className="text-sm font-bold text-slate-800 truncate text-pretty">
                 {recetaEmitida ? '¡Receta Emitida y Despachada!' : 'Emisión Oficial y Envío'}
               </h2>
               <p className="text-[11px] text-slate-500 truncate">
@@ -129,18 +129,18 @@ export function EnvioModal({
           </div>
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 active:bg-slate-200 transition-colors flex-shrink-0"
-            aria-label="Cerrar"
+            className="w-10 h-10 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 active:bg-slate-200 transition-colors flex-shrink-0 focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none"
+            aria-label="Cerrar ventana de envío"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
         {recetaEmitida ? (
           /* Pantalla de Éxito y Despacho */
-          <div className="p-6 space-y-5">
+          <div className="p-6 space-y-5 overflow-y-auto overscroll-contain">
             <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200 flex items-start gap-3">
-              <CheckCircle2 className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-6 h-6 text-emerald-600 flex-shrink-0 mt-0.5" aria-hidden="true" />
               <div>
                 <h3 className="text-sm font-bold text-emerald-900">
                   Receta Médica #{recetaEmitida.codigoRX} generada exitosamente
@@ -156,7 +156,7 @@ export function EnvioModal({
               <span className="text-[11px] uppercase tracking-wider font-semibold text-blue-200">
                 Código Identificador de Retiro
               </span>
-              <div className="text-3xl font-extrabold font-mono tracking-wider mt-1 text-yellow-300">
+              <div className="text-3xl font-extrabold font-mono tabular-nums tracking-wider mt-1 text-yellow-300" translate="no">
                 {recetaEmitida.codigoRX}
               </div>
               <p className="text-xs text-blue-100 mt-2">
@@ -325,7 +325,7 @@ export function EnvioModal({
                 type="button"
                 onClick={onClose}
                 disabled={isSending}
-                className="w-full sm:w-auto px-4 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors min-h-[44px]"
+                className="w-full sm:w-auto px-4 py-2.5 text-xs font-semibold text-slate-600 hover:bg-slate-100 rounded-xl transition-colors min-h-[44px] focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none tap-press"
               >
                 Volver y Editar
               </button>
@@ -334,16 +334,16 @@ export function EnvioModal({
                 type="button"
                 onClick={handleConfirmarEnvio}
                 disabled={isSending}
-                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-xs font-bold text-white bg-blue-700 hover:bg-blue-800 disabled:opacity-50 rounded-xl shadow-md transition-all min-h-[48px] touch-manipulation"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 text-xs font-bold text-white bg-blue-700 hover:bg-blue-800 disabled:opacity-50 rounded-xl shadow-md transition-all min-h-[48px] touch-manipulation focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:outline-none tap-press"
               >
                 {isSending ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Compilando PDF y Despachando...</span>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" aria-hidden="true" />
+                    <span>Compilando PDF y Despachando…</span>
                   </>
                 ) : (
                   <>
-                    <Send className="w-4 h-4" />
+                    <Send className="w-4 h-4" aria-hidden="true" />
                     <span>Confirmar, Emitir y Despachar a Farmacia</span>
                   </>
                 )}
