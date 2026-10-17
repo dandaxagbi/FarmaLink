@@ -150,7 +150,11 @@ export function CIE11Selector({ value, onChange }: CIE11SelectorProps) {
               <Search className="w-5 h-5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               <input
                 ref={inputSearchRef}
-                type="text"
+                type="search"
+                enterKeyHint="search"
+                autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck={false}
                 placeholder="Buscar código (ej. CA01) o patología (asma, diabetes)..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -160,7 +164,7 @@ export function CIE11Selector({ value, onChange }: CIE11SelectorProps) {
                 <button
                   type="button"
                   onClick={() => setSearchTerm('')}
-                  className="w-10 h-10 flex items-center justify-center absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  className="w-10 h-10 flex items-center justify-center absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 tap-press"
                 >
                   <X className="w-4 h-4" />
                 </button>

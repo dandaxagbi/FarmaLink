@@ -91,6 +91,19 @@ export function RecetaForm() {
     setFechaFin(finCalculado);
   }, [fechaInicio, duracionNumero, duracionUnidad]);
 
+  const handleEstablecerFechaHoy = () => {
+    const hoy = new Date();
+    const d = String(hoy.getDate()).padStart(2, '0');
+    const m = String(hoy.getMonth() + 1).padStart(2, '0');
+    const y = hoy.getFullYear();
+    setFechaInicio(`${d}/${m}/${y}`);
+  };
+
+  const handleSeleccionarDuracionRapida = (dias: number) => {
+    setDuracionNumero(dias);
+    setDuracionUnidad('dia(s)');
+  };
+
   // Cuando selecciona un medicamento del catálogo
   const handleSeleccionarMedicamento = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedId = e.target.value;
@@ -357,19 +370,27 @@ export function RecetaForm() {
             </div>
           </div>
 
-          {/* Pestañas de Tratamiento con soporte touch */}
-          <div className="flex items-center gap-1 sm:gap-2 border-b border-transparent -mb-px overflow-x-auto no-scrollbar">
+          {/* Control Segmentado Ergonómico de Tratamiento (Hick's Law / Thumb Zone) */}
+          <div className="treatment-segmented-control mb-1">
             <button
+              type="button"
+              id="tab-farmacologico"
               onClick={() => setActiveTab('farmacologico')}
-              className={`tab-button min-h-[44px] text-xs sm:text-sm whitespace-nowrap touch-manipulation ${activeTab === 'farmacologico' ? 'active' : ''}`}
+              className={`treatment-segment-btn tap-press ${activeTab === 'farmacologico' ? 'active' : ''}`}
             >
-              Tratamiento farmacológico
+              <span className="text-sm">💊</span>
+              <span className="sm:hidden">Fármacos</span>
+              <span className="hidden sm:inline">Tratamiento farmacológico</span>
             </button>
             <button
+              type="button"
+              id="tab-no-farmacologico"
               onClick={() => setActiveTab('no_farmacologico')}
-              className={`tab-button min-h-[44px] text-xs sm:text-sm whitespace-nowrap touch-manipulation ${activeTab === 'no_farmacologico' ? 'active' : ''}`}
+              className={`treatment-segment-btn tap-press ${activeTab === 'no_farmacologico' ? 'active' : ''}`}
             >
-              Tratamiento no farmacológico
+              <span className="text-sm">📋</span>
+              <span className="sm:hidden">Cuidados Generales</span>
+              <span className="hidden sm:inline">Tratamiento no farmacológico</span>
             </button>
           </div>
         </div>
@@ -591,24 +612,39 @@ export function RecetaForm() {
                       <button
                         type="button"
                         onClick={() => setDuracionUnidad('dia(s)')}
-                        className={`duration-pill-btn ${duracionUnidad === 'dia(s)' ? 'active' : ''}`}
+                        className={`duration-pill-btn tap-press ${duracionUnidad === 'dia(s)' ? 'active' : ''}`}
                       >
                         día(s)
                       </button>
                       <button
                         type="button"
                         onClick={() => setDuracionUnidad('semana(s)')}
-                        className={`duration-pill-btn ${duracionUnidad === 'semana(s)' ? 'active' : ''}`}
+                        className={`duration-pill-btn tap-press ${duracionUnidad === 'semana(s)' ? 'active' : ''}`}
                       >
                         semana(s)
                       </button>
                       <button
                         type="button"
                         onClick={() => setDuracionUnidad('mes(es)')}
-                        className={`duration-pill-btn ${duracionUnidad === 'mes(es)' ? 'active' : ''}`}
+                        className={`duration-pill-btn tap-press ${duracionUnidad === 'mes(es)' ? 'active' : ''}`}
                       >
                         mes(es)
                       </button>
+                    </div>
+
+                    {/* Chips rápidos clínicos (Fitts's Law) */}
+                    <div className="w-full flex items-center gap-1.5 flex-wrap pt-0.5">
+                      <span className="text-[11px] font-semibold text-slate-500 mr-0.5">Rápido:</span>
+                      {[3, 5, 7, 10, 14, 30].map((dias) => (
+                        <button
+                          key={dias}
+                          type="button"
+                          onClick={() => handleSeleccionarDuracionRapida(dias)}
+                          className={`quick-chip tap-press ${duracionNumero === dias && duracionUnidad === 'dia(s)' ? 'active' : ''}`}
+                        >
+                          {dias} d
+                        </button>
+                      ))}
                     </div>
                   </div>
 
@@ -623,6 +659,14 @@ export function RecetaForm() {
                         onChange={(e) => setFechaInicio(e.target.value)}
                         className="field-input"
                       />
+                      <button
+                        type="button"
+                        onClick={handleEstablecerFechaHoy}
+                        className="field-clear-btn right-9 text-[11px] font-bold text-blue-700 hover:text-blue-900 px-1 w-auto"
+                        title="Fijar hoy"
+                      >
+                        Hoy
+                      </button>
                       <span className="field-clear-btn pointer-events-none text-slate-400">
                         <Calendar className="w-4 h-4" />
                       </span>
@@ -805,12 +849,12 @@ export function RecetaForm() {
         </div>
       </div>
 
-      {/* BARRA INFERIOR FIJA PARA MÓVILES (Zona Ergonómica del Pulgar - Thumb Zone Action Bar) */}
-      <div className="lg:hidden fixed bottom-14 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex items-center justify-between gap-2 shadow-lg safe-area-bottom w-full max-w-full">
+      {/* BARRA INFERIOR FIJA PARA MÓVILES (Zona Ergonómica del Pulgar - Steven Hoober) */}
+      <div className="lg:hidden fixed mobile-action-bar left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-slate-200 px-3 py-2 flex items-center justify-between gap-2 shadow-[0_-4px_16px_rgba(0,0,0,0.06)] w-full max-w-full">
         <button
           type="button"
           onClick={handleDescargarBorradorPDF}
-          className="w-12 h-11 flex items-center justify-center rounded-xl bg-slate-100 border border-slate-200 text-slate-700 active:bg-slate-200 flex-shrink-0 touch-manipulation"
+          className="w-12 h-11 flex items-center justify-center rounded-xl bg-slate-100 border border-slate-200 text-slate-700 active:bg-slate-200 flex-shrink-0 touch-manipulation tap-press"
           title="Previsualizar PDF"
           aria-label="Previsualizar PDF"
         >
@@ -820,7 +864,7 @@ export function RecetaForm() {
         <button
           type="button"
           onClick={handleAbrirEnvio}
-          className="flex-1 h-11 flex items-center justify-center gap-2 px-4 rounded-xl bg-blue-700 active:bg-blue-800 text-white font-bold text-xs shadow-md touch-manipulation"
+          className="flex-1 h-11 flex items-center justify-center gap-2 px-4 rounded-xl bg-blue-700 active:bg-blue-800 text-white font-bold text-xs shadow-md touch-manipulation tap-press"
         >
           <Send className="w-4 h-4" />
           <span className="truncate">

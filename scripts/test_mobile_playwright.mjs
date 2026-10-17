@@ -39,6 +39,7 @@ async function runMobileAudit() {
   const targetUrl = 'http://localhost:3000';
   console.log(`🌐 Navegando a ${targetUrl}...`);
   await page.goto(targetUrl, { waitUntil: 'networkidle' });
+  await page.addStyleTag({ content: 'nextjs-portal { display: none !important; }' });
 
   // 1. Captura de vista inicial de la receta en mobile
   console.log('📸 Tomando captura 1: Receta Móvil Inicial...');
@@ -89,6 +90,40 @@ async function runMobileAudit() {
   }
 
   await page.waitForTimeout(500);
+
+  // 3.1 Probar nuevo Control Segmentado de Tratamiento (Hick's Law)
+  console.log('🧪 Probando Control Segmentado de Tratamiento...');
+  const tabNoFarm = page.locator('#tab-no-farmacologico');
+  await tabNoFarm.click();
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: 'mobile_3b_tab_no_farmacologico.png', fullPage: false });
+
+  const tabFarm = page.locator('#tab-farmacologico');
+  await tabFarm.click();
+  await page.waitForTimeout(400);
+
+  // 3.2 Probar Quick-Chip de Duración (Fitts's Law)
+  console.log('🧪 Probando Quick-Chip de Duración (7d)...');
+  const chip7d = page.locator('button:has-text("7 d")').first();
+  if (await chip7d.isVisible()) {
+    await chip7d.click();
+    console.log('✅ Chip 7 días clickeado');
+  }
+
+  // 3.3 Probar Apertura de Modal de Envío (Bottom Sheet)
+  console.log('🧪 Probando Modal de Envío (Bottom Sheet)...');
+  const btnEmitir = page.locator('button:has-text("Emitir y Despachar")').first();
+  if (await btnEmitir.isVisible()) {
+    await btnEmitir.click();
+    await page.waitForTimeout(500);
+    await page.screenshot({ path: 'mobile_3c_envio_modal.png', fullPage: false });
+    // Cerrar modal
+    const closeBtn = page.locator('button[aria-label="Cerrar"]').first();
+    if (await closeBtn.isVisible()) {
+      await closeBtn.click();
+      await page.waitForTimeout(400);
+    }
+  }
 
   // 4. Probar tab de navegación inferior: Pacientes
   console.log('🧪 Probando navegación a pestaña Pacientes...');

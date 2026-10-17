@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap');
 
 :root {
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Manrope', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
@@ -290,3 +290,113 @@ input, select, textarea, button {
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* =========================================================
+   ERONOMÍA MÓVIL Y ACCESIBILIDAD TÁCTIL (Steven Hoober & NN Group)
+   ========================================================= */
+
+/* Eliminación de tap delay y highlight parpadeante en Safari/Chrome iOS */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button, a, input, select, textarea {
+  touch-action: manipulation;
+}
+
+/* Soporte dinámico para Notch e indicador gestual inferior de iOS / Android */
+.safe-area-bottom {
+  padding-bottom: calc(0.45rem + env(safe-area-inset-bottom, 0px));
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Barra de acción primaria fija adaptada sobre la barra de navegación */
+.mobile-action-bar {
+  bottom: calc(3.85rem + env(safe-area-inset-bottom, 0px));
+}
+
+/* Micro-interacción táctil instantánea (Fitts's Law + Feedback) */
+.tap-press {
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1), filter 0.12s ease;
+}
+
+.tap-press:active {
+  transform: scale(0.97);
+}
+
+/* Segmented Control para Pestañas de Tratamiento (Hick's Law) */
+.treatment-segmented-control {
+  display: flex;
+  width: 100%;
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 4px;
+  gap: 4px;
+  border: 1px solid #e2e8f0;
+}
+
+.treatment-segment-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 8px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  transition: all 0.16s ease;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.treatment-segment-btn.active {
+  background: #ffffff;
+  color: #1d4ed8;
+  font-weight: 700;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Chips Rápidos de Posología / Duración (Fitts's Law) */
+.quick-chip {
+  min-height: 38px;
+  min-width: 44px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #475569;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.12s ease;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.quick-chip:active, .quick-chip.active {
+  background: #eff6ff;
+  border-color: #1d4ed8;
+  color: #1d4ed8;
+  font-weight: 700;
+  box-shadow: 0 0 0 1px #1d4ed8;
+}
+
+/* Indicador de arrastre para Bottom Sheets en Móvil */
+.bottom-sheet-handle {
+  width: 40px;
+  height: 4px;
+  background-color: #cbd5e1;
+  border-radius: 9999px;
+  margin: 8px auto 4px auto;
+}
+
